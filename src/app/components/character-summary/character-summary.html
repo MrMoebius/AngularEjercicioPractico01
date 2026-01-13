@@ -42,6 +42,9 @@
   @if (character().nombre && character().raza && character().clase) {
     <div class="ready-message">
       <p>¡Personaje listo para comenzar la aventura!</p>
+      <button type="button" class="reset-button" (click)="resetCharacter()">
+        Reiniciar Personaje
+      </button>
     </div>
   }
 </div>

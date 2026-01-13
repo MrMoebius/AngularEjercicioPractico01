@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClasEquipSelector } from './class-equip-selector';
+import { ClassEquipSelector } from './class-equip-selector';
 
-describe('ClasEquipSelector', () => {
-  let component: ClasEquipSelector;
-  let fixture: ComponentFixture<ClasEquipSelector>;
+describe('ClassEquipSelector', () => {
+  let component: ClassEquipSelector;
+  let fixture: ComponentFixture<ClassEquipSelector>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClasEquipSelector]
+      imports: [ClassEquipSelector]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ClasEquipSelector);
+    fixture = TestBed.createComponent(ClassEquipSelector);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
