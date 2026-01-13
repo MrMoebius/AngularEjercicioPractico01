@@ -1,1 +1,29 @@
-<p>appearance-selector works!</p>
+<div class="appearance-selector">
+  <h2>Apariencia del Personaje</h2>
+  
+  <div class="form-group">
+    <label for="descripcion">Descripción Física:</label>
+    <textarea 
+      id="descripcion" 
+      [(ngModel)]="descripcion" 
+      (ngModelChange)="onDescripcionChange()"
+      placeholder="Describe la apariencia física del personaje..."
+      rows="4"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="imagen">URL de la Imagen:</label>
+    <input 
+      type="url" 
+      id="imagen" 
+      [(ngModel)]="imagen" 
+      (ngModelChange)="onImagenChange()"
+      placeholder="https://ejemplo.com/imagen.jpg">
+    <small class="help-text">Introduce la URL de una imagen del personaje</small>
+  </div>
+
+  <div class="image-preview" *ngIf="imagen">
+    <p>Vista previa:</p>
+    <img [src]="imagen" alt="Vista previa del personaje" onerror="this.style.display='none'">
+  </div>
+</div>
