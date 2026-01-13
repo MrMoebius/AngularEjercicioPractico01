@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CharacterBuild } from '../../services/character-build';
 
 @Component({
   selector: 'app-appearance-selector',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './appearance-selector.html',
   styleUrl: './appearance-selector.css',
 })

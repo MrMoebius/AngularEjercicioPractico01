@@ -8,9 +8,11 @@
       [(ngModel)]="clase" 
       (ngModelChange)="onClaseChange()">
       <option value="">Selecciona una clase</option>
-      <option *ngFor="let claseOption of clasesDisponibles" [value]="claseOption">
+      @for (claseOption of clasesDisponibles; track claseOption) {
+      <option [value]="claseOption">
         {{ claseOption }}
       </option>
+      }
     </select>
   </div>
 
@@ -21,9 +23,11 @@
       [(ngModel)]="arma" 
       (ngModelChange)="onArmaChange()">
       <option value="">Selecciona un arma</option>
-      <option *ngFor="let armaOption of armasDisponibles" [value]="armaOption">
+      @for (armaOption of armasDisponibles; track armaOption) {
+      <option [value]="armaOption">
         {{ armaOption }}
       </option>
+      }
     </select>
   </div>
 </div>

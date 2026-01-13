@@ -18,9 +18,11 @@
       [(ngModel)]="raza" 
       (ngModelChange)="onRazaChange()">
       <option value="">Selecciona una raza</option>
-      <option *ngFor="let razaOption of razasDisponibles" [value]="razaOption">
-        {{ razaOption }}
-      </option>
+      @for (razaOption of razasDisponibles; track razaOption) {
+        <option [value]="razaOption">
+          {{ razaOption }}
+        </option>
+      }
     </select>
   </div>
 </div>

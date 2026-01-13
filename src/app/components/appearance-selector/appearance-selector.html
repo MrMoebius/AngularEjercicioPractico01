@@ -22,8 +22,10 @@
     <small class="help-text">Introduce la URL de una imagen del personaje</small>
   </div>
 
-  <div class="image-preview" *ngIf="imagen">
-    <p>Vista previa:</p>
-    <img [src]="imagen" [alt]="'Vista previa del personaje'">
-  </div>
+  @if (imagen) {
+    <div class="image-preview">
+      <p>Vista previa:</p>
+      <img [src]="imagen" [alt]="'Vista previa del personaje'">
+    </div>
+  }
 </div>
