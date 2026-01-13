@@ -1,11 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CharacterBuild } from '../../services/character-build';
 
 @Component({
   selector: 'app-identity-selector',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './identity-selector.html',
   styleUrl: './identity-selector.css',
 })
 export class IdentitySelector {
+  private characterService = inject(CharacterBuild);
+  
+  nombre: string = '';
+  raza: string = '';
+  
+  razasDisponibles: string[] = ['Humano', 'Elfo', 'Orco', 'Enano', 'Mediano', 'Semielfo'];
 
+  onNombreChange() {
+    this.characterService.updateNombre(this.nombre);
+  }
+
+  onRazaChange() {
+    this.characterService.updateRaza(this.raza);
+  }
 }

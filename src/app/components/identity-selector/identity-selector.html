@@ -1,1 +1,26 @@
-<p>identity-selector works!</p>
+<div class="identity-selector">
+  <h2>Identidad del Personaje</h2>
+  
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input 
+      type="text" 
+      id="nombre" 
+      [(ngModel)]="nombre" 
+      (ngModelChange)="onNombreChange()"
+      placeholder="Introduce el nombre del personaje">
+  </div>
+
+  <div class="form-group">
+    <label for="raza">Raza:</label>
+    <select 
+      id="raza" 
+      [(ngModel)]="raza" 
+      (ngModelChange)="onRazaChange()">
+      <option value="">Selecciona una raza</option>
+      <option *ngFor="let razaOption of razasDisponibles" [value]="razaOption">
+        {{ razaOption }}
+      </option>
+    </select>
+  </div>
+</div>
