@@ -1,1 +1,41 @@
-<p>character-summary works!</p>
+<div class="character-summary">
+  <h2>Resumen del Personaje</h2>
+  <p class="subtitle">Pantalla previa al inicio de la partida</p>
+  
+  <div class="summary-container">
+    <div class="character-image" *ngIf="character().imagen">
+      <img [src]="character().imagen" alt="Imagen del personaje" onerror="this.style.display='none'">
+    </div>
+    
+    <div class="character-info">
+      <div class="info-section">
+        <h3>Información Básica</h3>
+        <div class="info-row">
+          <span class="label">Nombre:</span>
+          <span class="value">{{ character().nombre || 'No especificado' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Raza:</span>
+          <span class="value">{{ character().raza || 'No especificada' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Clase:</span>
+          <span class="value">{{ character().clase || 'No especificada' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Arma:</span>
+          <span class="value">{{ character().arma || 'No especificada' }}</span>
+        </div>
+      </div>
+      
+      <div class="info-section" *ngIf="character().descripcion">
+        <h3>Descripción Física</h3>
+        <p class="description">{{ character().descripcion }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="ready-message" *ngIf="character().nombre && character().raza && character().clase">
+    <p>¡Personaje listo para comenzar la aventura!</p>
+  </div>
+</div>
