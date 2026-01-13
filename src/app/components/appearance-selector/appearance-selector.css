@@ -77,3 +77,13 @@
 .image-preview img[src=""] {
   display: none;
 }
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 10px;
+  padding: 8px;
+  background: #fee;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+}

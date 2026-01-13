@@ -25,7 +25,14 @@
   @if (imagen) {
     <div class="image-preview">
       <p>Vista previa:</p>
-      <img [src]="imagen" [alt]="'Vista previa del personaje'">
+      <img 
+        [src]="imagen" 
+        [alt]="'Vista previa del personaje'"
+        (error)="onImageError($event)"
+        (load)="onImageLoad()">
+      @if (imageError) {
+        <p class="error-message">Error al cargar la imagen. Verifica que la URL sea correcta.</p>
+      }
     </div>
   }
 </div>
