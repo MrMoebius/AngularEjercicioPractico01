@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClasEquipSelector } from './clas-equip-selector';
+import { ClasEquipSelector } from './class-equip-selector';
 
 describe('ClasEquipSelector', () => {
   let component: ClasEquipSelector;

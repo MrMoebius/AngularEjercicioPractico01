@@ -9,6 +9,7 @@ import { CharacterBuild } from '../../services/character-build';
   templateUrl: './identity-selector.html',
   styleUrl: './identity-selector.css',
 })
+
 export class IdentitySelector {
   private characterService = inject(CharacterBuild);
   

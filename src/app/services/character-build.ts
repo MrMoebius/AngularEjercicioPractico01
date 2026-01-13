@@ -26,7 +26,7 @@ export class CharacterBuild {
     this.characterState.update(char => ({ ...char, raza }));
   }
 
-  udpateClase(clase: string) {
+  updateClase(clase: string) {
     this.characterState.update(char => ({ ...char, clase }));
   }
 
