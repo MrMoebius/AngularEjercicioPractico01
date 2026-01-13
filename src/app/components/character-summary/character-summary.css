@@ -39,6 +39,12 @@
   border-radius: 8px;
   border: 3px solid #34495e;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+.character-image img:not([src]),
+.character-image img[src=""] {
+  display: none;
 }
 
 .character-info {
@@ -83,7 +89,7 @@
 }
 
 .description {
-  color: #555;
+  color: #333;
   line-height: 1.6;
   margin: 0;
   padding: 10px;
@@ -95,7 +101,7 @@
 .ready-message {
   margin-top: 20px;
   padding: 15px;
-  background: #27ae60;
+  background: #1e8449;
   color: white;
   border-radius: 6px;
   text-align: center;

@@ -4,7 +4,7 @@
   
   <div class="summary-container">
     <div class="character-image" *ngIf="character().imagen">
-      <img [src]="character().imagen" alt="Imagen del personaje" onerror="this.style.display='none'">
+      <img [src]="character().imagen" [alt]="character().nombre || 'Personaje'">
     </div>
     
     <div class="character-info">

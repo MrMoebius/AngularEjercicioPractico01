@@ -24,6 +24,6 @@
 
   <div class="image-preview" *ngIf="imagen">
     <p>Vista previa:</p>
-    <img [src]="imagen" alt="Vista previa del personaje" onerror="this.style.display='none'">
+    <img [src]="imagen" [alt]="'Vista previa del personaje'">
   </div>
 </div>

@@ -1,3 +1,24 @@
+<div class="app-container">
+  <header>
+    <h1>Configurador de Personaje</h1>
+    <p>Configura tu personaje antes de comenzar la aventura</p>
+  </header>
 
+  <main class="main-content">
+    <div class="config-section">
+      <app-identity-selector></app-identity-selector>
+    </div>
 
-<router-outlet />
+    <div class="config-section">
+      <app-class-equip-selector></app-class-equip-selector>
+    </div>
+
+    <div class="config-section">
+      <app-appearance-selector></app-appearance-selector>
+    </div>
+
+    <div class="summary-section">
+      <app-character-summary></app-character-summary>
+    </div>
+  </main>
+</div>
