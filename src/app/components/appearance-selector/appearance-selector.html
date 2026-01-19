@@ -13,13 +13,27 @@
 
   <div class="form-group">
     <label for="imagen">URL de la Imagen:</label>
-    <input 
-      type="url" 
-      id="imagen" 
-      [(ngModel)]="imagen" 
-      (ngModelChange)="onImagenChange()"
-      placeholder="https://ejemplo.com/imagen.jpg">
-    <small class="help-text">Introduce la URL de una imagen del personaje</small>
+    <div class="image-input-container">
+      <input 
+        type="url" 
+        id="imagen" 
+        [(ngModel)]="imagen" 
+        (ngModelChange)="onImagenChange()"
+        placeholder="https://ejemplo.com/imagen.jpg o selecciona un archivo">
+      <button 
+        type="button" 
+        class="file-select-button" 
+        (click)="fileInput.click()">
+        Buscar en el ordenador
+      </button>
+      <input 
+        type="file" 
+        #fileInput 
+        accept="image/*" 
+        (change)="onFileSelected($event)"
+        style="display: none;">
+    </div>
+    <small class="help-text">Introduce la URL de una imagen o selecciona un archivo de tu ordenador</small>
   </div>
 
   @if (imagen) {

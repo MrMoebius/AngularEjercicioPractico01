@@ -84,4 +84,38 @@ export class AppearanceSelector {
   onImageLoad() {
     this.imageError = false;
   }
+
+  /**
+   * Se ejecuta cuando el usuario selecciona un archivo de imagen desde su ordenador.
+   * Lee el archivo y lo convierte a una data URL (base64) para poder mostrarlo.
+   * @param event - Evento de cambio del input file
+   */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (!file) {
+      return;
+    }
+
+    // Verificar que sea una imagen
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor, selecciona un archivo de imagen válido.');
+      return;
+    }
+
+    // Leer el archivo y convertirlo a data URL
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      const result = e.target?.result;
+      if (typeof result === 'string') {
+        this.imagen = result;
+        this.onImagenChange();
+      }
+    };
+    reader.onerror = () => {
+      alert('Error al leer el archivo. Por favor, intenta con otro archivo.');
+    };
+    reader.readAsDataURL(file);
+  }
 }
