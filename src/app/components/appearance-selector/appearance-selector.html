@@ -1,6 +1,4 @@
 <div class="appearance-selector">
-  <h2>Apariencia del Personaje</h2>
-  
   <div class="form-group">
     <label for="descripcion">Descripción Física:</label>
     <textarea 
@@ -11,42 +9,7 @@
       rows="4"></textarea>
   </div>
 
-  <div class="form-group">
-    <label for="imagen">URL de la Imagen:</label>
-    <div class="image-input-container">
-      <input 
-        type="url" 
-        id="imagen" 
-        [(ngModel)]="imagen" 
-        (ngModelChange)="onImagenChange()"
-        placeholder="https://ejemplo.com/imagen.jpg o selecciona un archivo">
-      <button 
-        type="button" 
-        class="file-select-button" 
-        (click)="fileInput.click()">
-        Buscar en el ordenador
-      </button>
-      <input 
-        type="file" 
-        #fileInput 
-        accept="image/*" 
-        (change)="onFileSelected($event)"
-        style="display: none;">
-    </div>
-    <small class="help-text">Introduce la URL de una imagen o selecciona un archivo de tu ordenador</small>
+  <div class="info-message">
+    <p>ℹ️ La imagen del personaje se seleccionará automáticamente según la raza, clase y arma elegidas.</p>
   </div>
-
-  @if (imagen) {
-    <div class="image-preview">
-      <p>Vista previa:</p>
-      <img 
-        [src]="imagen" 
-        [alt]="'Vista previa del personaje'"
-        (error)="onImageError($event)"
-        (load)="onImageLoad()">
-      @if (imageError) {
-        <p class="error-message">Error al cargar la imagen. Verifica que la URL sea correcta.</p>
-      }
-    </div>
-  }
 </div>

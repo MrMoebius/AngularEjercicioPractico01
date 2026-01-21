@@ -1,6 +1,5 @@
 <div class="class-equip-selector">
   <h2>Clase y Arma Inicial</h2>
-  
   <div class="form-group">
     <label for="clase">Clase:</label>
     <select 
@@ -8,10 +7,8 @@
       [(ngModel)]="clase" 
       (ngModelChange)="onClaseChange()">
       <option value="">Selecciona una clase</option>
-      @for (claseOption of clasesDisponibles; track claseOption) {
-      <option [value]="claseOption">
-        {{ claseOption }}
-      </option>
+      @for (claseOption of clasesDisponibles(); track claseOption) {
+        <option [value]="claseOption">{{ claseOption }}</option>
       }
     </select>
   </div>
@@ -23,10 +20,8 @@
       [(ngModel)]="arma" 
       (ngModelChange)="onArmaChange()">
       <option value="">Selecciona un arma</option>
-      @for (armaOption of armasDisponibles; track armaOption) {
-      <option [value]="armaOption">
-        {{ armaOption }}
-      </option>
+      @for (armaOption of armasDisponibles(); track armaOption) {
+        <option [value]="armaOption">{{ armaOption }}</option>
       }
     </select>
   </div>

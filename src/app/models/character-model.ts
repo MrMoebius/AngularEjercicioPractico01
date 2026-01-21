@@ -8,6 +8,8 @@ export type Character = {
     nombre: string;
     /** Raza del personaje (ej: Humano, Elfo, Orco, etc.) */
     raza: string;
+    /** Género del personaje (Masculino, Femenino) */
+    genero: string;
     /** Clase del personaje (ej: Guerrero, Mago, Arquero, etc.) */
     clase: string;
     /** Arma inicial del personaje */

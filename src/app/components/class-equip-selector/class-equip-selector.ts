@@ -1,12 +1,8 @@
-import { Component, inject, effect } from '@angular/core';
+import { Component, inject, effect, Injector, afterNextRender, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CharacterBuild } from '../../services/character-build';
+import { CharacterImageStore } from '../../services/character-image-store';
 
-/**
- * Componente para seleccionar la clase y el arma inicial del personaje.
- * Permite seleccionar la clase del personaje y su arma inicial.
- * Este componente no modifica el nombre ni la raza del personaje.
- */
 @Component({
   selector: 'app-class-equip-selector',
   imports: [FormsModule],
@@ -15,58 +11,66 @@ import { CharacterBuild } from '../../services/character-build';
 })
 export class ClasEquipSelector {
   private readonly characterService = inject(CharacterBuild);
+  private readonly imageStore = inject(CharacterImageStore);
+  private readonly injector = inject(Injector);
   
-  /**
-   * Signal de solo lectura con el estado actual del personaje.
-   * Se usa para sincronizar los campos del formulario con el servicio.
-   */
   character = this.characterService.getCharacter();
   
-  /**
-   * Clase del personaje seleccionada por el usuario.
-   */
   clase: string = '';
-  
-  /**
-   * Arma inicial del personaje seleccionada por el usuario.
-   */
   arma: string = '';
   
-  /**
-   * Lista de clases disponibles para seleccionar.
-   */
-  clasesDisponibles: string[] = ['Guerrero', 'Mago', 'Arquero', 'Pícaro', 'Clérigo', 'Explorador', 'Bárbaro', 'Paladín'];
+  clasesDisponibles = signal<string[]>([]);
+  armasDisponibles = signal<string[]>([]);
   
-  /**
-   * Lista de armas disponibles para seleccionar.
-   */
-  armasDisponibles: string[] = ['Espada y Escudo', 'Báculo Mágico', 'Arco y Flechas', 'Dagas', 'Maza', 'Hacha', 'Bastón', 'Ballesta'];
-  
-  /**
-   * Constructor que sincroniza los campos del formulario con el servicio.
-   * Usa effect() para reaccionar automáticamente cuando el servicio cambia,
-   * permitiendo que el formulario se actualice cuando se reinicia el personaje.
-   */
   constructor() {
-    effect(() => {
-      const char = this.character();
-      this.clase = char.clase;
-      this.arma = char.arma;
+    const char = this.character();
+    this.clase = char.clase;
+    this.arma = char.arma;
+    
+    this.clasesDisponibles.set(this.imageStore.getClasesDisponibles());
+    this.armasDisponibles.set(this.imageStore.getArmasDisponibles());
+    
+    afterNextRender(() => {
+      effect(() => {
+        const char = this.character();
+        this.clase = char.clase;
+        this.arma = char.arma;
+        
+        const filtrosClases: { raza?: string, genero?: string, arma?: string } = {};
+        if (char.raza) filtrosClases.raza = char.raza;
+        if (char.genero) filtrosClases.genero = char.genero;
+        if (char.arma) filtrosClases.arma = char.arma;
+        this.clasesDisponibles.set(
+          this.imageStore.getClasesDisponibles(Object.keys(filtrosClases).length > 0 ? filtrosClases : undefined)
+        );
+        
+        const filtrosArmas: { raza?: string, genero?: string, clase?: string } = {};
+        if (char.raza) filtrosArmas.raza = char.raza;
+        if (char.genero) filtrosArmas.genero = char.genero;
+        if (char.clase) filtrosArmas.clase = char.clase;
+        this.armasDisponibles.set(
+          this.imageStore.getArmasDisponibles(Object.keys(filtrosArmas).length > 0 ? filtrosArmas : undefined)
+        );
+        
+        const clasesDisponibles = this.clasesDisponibles();
+        if (clasesDisponibles.length > 0 && this.clase && !clasesDisponibles.includes(this.clase)) {
+          this.clase = '';
+          this.characterService.updateClase('');
+        }
+        
+        const armasDisponibles = this.armasDisponibles();
+        if (armasDisponibles.length > 0 && this.arma && !armasDisponibles.includes(this.arma)) {
+          this.arma = '';
+          this.characterService.updateArma('');
+        }
+      }, { injector: this.injector });
     });
   }
   
-  /**
-   * Se ejecuta cuando el usuario cambia la clase del personaje.
-   * Actualiza el servicio con la nueva clase.
-   */
   onClaseChange() {
     this.characterService.updateClase(this.clase);
   }
   
-  /**
-   * Se ejecuta cuando el usuario cambia el arma del personaje.
-   * Actualiza el servicio con el nuevo arma.
-   */
   onArmaChange() {
     this.characterService.updateArma(this.arma);
   }

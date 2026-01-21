@@ -1,64 +1,163 @@
-.app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-header {
+.app__header {
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
+  border-bottom: 3px solid var(--color-primary);
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
   text-align: center;
-  margin-bottom: 30px;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
 }
 
-header h1 {
-  margin: 0 0 10px 0;
-  font-size: 32px;
+.app__header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-header p {
+.app__header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.app__title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+.app__icon {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.app__title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--color-text) 0%, var(--color-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
-  font-size: 16px;
-  opacity: 0.9;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
-.main-content {
+.app__title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  border-radius: 2px;
+}
+
+.app__subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  font-style: italic;
+}
+
+.app__divider {
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(108, 92, 231, 0.5);
+}
+
+.app__main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl) var(--spacing-xl);
+  min-height: calc(100vh - 200px);
+}
+
+.app__left-panel {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-.config-section {
-  display: flex;
-  flex-direction: column;
+.app__config-section {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
 }
 
-.summary-section {
-  margin-top: 20px;
+.app__right-panel {
+  position: sticky;
+  top: var(--spacing-xl);
+  align-self: start;
 }
 
-@media (min-width: 768px) {
-  .main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+@media (max-width: 768px) {
+  .app__header {
+    padding: var(--spacing-md) var(--spacing-md);
   }
 
-  .summary-section {
-    grid-column: 1 / -1;
+  .app__title-wrapper {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .app__icon {
+    font-size: 2.5rem;
+  }
+
+  .app__title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .app__subtitle {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .app__main {
+    grid-template-columns: 1fr;
+    padding: 0 var(--spacing-md) var(--spacing-md);
+  }
+
+  .app__right-panel {
+    position: static;
   }
 }
 
 @media (min-width: 1024px) {
-  .main-content {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .summary-section {
-    grid-column: 1 / -1;
+  .app__main {
+    grid-template-columns: 1fr 2fr;
   }
 }

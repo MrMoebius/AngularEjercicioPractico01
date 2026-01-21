@@ -1,0 +1,41 @@
+<div class="image-list-container">
+  <h3>Imágenes Disponibles</h3>
+  
+  <ul class="image-list">
+    @for (image of imageStore.images(); track image.id) {
+      <li 
+        class="image-list__item"
+        [class.is-selected]="imageStore.selectedId() === image.id"
+        [style.--image-color]="image.color"
+      >
+        <button 
+          class="image-list__button"
+          (click)="imageStore.selectImage(image.id)"
+          type="button"
+        >
+          <div class="image-list__content">
+            <div class="image-list__thumbnail">
+              @if (image.imageUrl) {
+                <img [src]="image.imageUrl" [alt]="image.name" />
+              } @else {
+                <div class="image-list__thumbnail-placeholder">{{ image.name.charAt(0) }}</div>
+              }
+            </div>
+            <div class="image-list__info">
+              <div class="image-list__name">{{ image.name }}</div>
+              <div class="image-list__tags">
+                @for (tag of image.tags; track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+              </div>
+            </div>
+          </div>
+        </button>
+      </li>
+    }
+  </ul>
+  
+  @if (imageStore.images().length === 0) {
+    <p class="empty-message">No hay imágenes disponibles. Agrega imágenes en character-image-store.ts</p>
+  }
+</div>

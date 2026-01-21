@@ -1,12 +1,8 @@
-import { Component, inject, effect } from '@angular/core';
+import { Component, inject, effect, Injector, afterNextRender, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CharacterBuild } from '../../services/character-build';
+import { CharacterImageStore } from '../../services/character-image-store';
 
-/**
- * Componente para seleccionar la identidad del personaje.
- * Permite introducir el nombre y seleccionar la raza del personaje.
- * Solo modifica los datos relacionados con la identidad (nombre y raza).
- */
 @Component({
   selector: 'app-identity-selector',
   imports: [FormsModule],
@@ -16,54 +12,74 @@ import { CharacterBuild } from '../../services/character-build';
 
 export class IdentitySelector {
   private readonly characterService = inject(CharacterBuild);
+  private readonly imageStore = inject(CharacterImageStore);
+  private readonly injector = inject(Injector);
   
-  /**
-   * Signal de solo lectura con el estado actual del personaje.
-   * Se usa para sincronizar los campos del formulario con el servicio.
-   */
   character = this.characterService.getCharacter();
   
-  /**
-   * Nombre del personaje introducido por el usuario.
-   */
   nombre: string = '';
-  
-  /**
-   * Raza del personaje seleccionada por el usuario.
-   */
   raza: string = '';
+  genero: string = '';
   
-  /**
-   * Lista de razas disponibles para seleccionar.
-   */
-  razasDisponibles: string[] = ['Humano', 'Elfo', 'Orco', 'Enano', 'Mediano', 'Semielfo'];
+  razasDisponibles = signal<string[]>([]);
+  generosDisponibles = signal<string[]>([]);
 
-  /**
-   * Constructor que sincroniza los campos del formulario con el servicio.
-   * Usa effect() para reaccionar automáticamente cuando el servicio cambia,
-   * permitiendo que el formulario se actualice cuando se reinicia el personaje.
-   */
   constructor() {
-    effect(() => {
-      const char = this.character();
-      this.nombre = char.nombre;
-      this.raza = char.raza;
+    const char = this.character();
+    this.nombre = char.nombre;
+    this.raza = char.raza;
+    this.genero = char.genero;
+    
+    this.razasDisponibles.set(this.imageStore.getRazasDisponibles());
+    this.generosDisponibles.set(this.imageStore.getGenerosDisponibles());
+    
+    afterNextRender(() => {
+      effect(() => {
+        const char = this.character();
+        this.nombre = char.nombre;
+        this.raza = char.raza;
+        this.genero = char.genero;
+        
+        const filtrosRazas: { genero?: string, clase?: string, arma?: string } = {};
+        if (char.genero) filtrosRazas.genero = char.genero;
+        if (char.clase) filtrosRazas.clase = char.clase;
+        if (char.arma) filtrosRazas.arma = char.arma;
+        this.razasDisponibles.set(
+          this.imageStore.getRazasDisponibles(Object.keys(filtrosRazas).length > 0 ? filtrosRazas : undefined)
+        );
+        
+        const filtrosGeneros: { raza?: string, clase?: string, arma?: string } = {};
+        if (char.raza) filtrosGeneros.raza = char.raza;
+        if (char.clase) filtrosGeneros.clase = char.clase;
+        if (char.arma) filtrosGeneros.arma = char.arma;
+        this.generosDisponibles.set(
+          this.imageStore.getGenerosDisponibles(Object.keys(filtrosGeneros).length > 0 ? filtrosGeneros : undefined)
+        );
+        
+        const razasDisponibles = this.razasDisponibles();
+        if (razasDisponibles.length > 0 && this.raza && !razasDisponibles.includes(this.raza)) {
+          this.raza = '';
+          this.characterService.updateRaza('');
+        }
+        
+        const generosDisponibles = this.generosDisponibles();
+        if (generosDisponibles.length > 0 && this.genero && !generosDisponibles.includes(this.genero)) {
+          this.genero = '';
+          this.characterService.updateGenero('');
+        }
+      }, { injector: this.injector });
     });
   }
 
-  /**
-   * Se ejecuta cuando el usuario cambia el nombre del personaje.
-   * Actualiza el servicio con el nuevo nombre.
-   */
   onNombreChange() {
     this.characterService.updateNombre(this.nombre);
   }
 
-  /**
-   * Se ejecuta cuando el usuario cambia la raza del personaje.
-   * Actualiza el servicio con la nueva raza.
-   */
   onRazaChange() {
     this.characterService.updateRaza(this.raza);
+  }
+
+  onGeneroChange() {
+    this.characterService.updateGenero(this.genero);
   }
 }

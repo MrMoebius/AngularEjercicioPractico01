@@ -1,6 +1,5 @@
 <div class="identity-selector">
   <h2>Identidad del Personaje</h2>
-  
   <div class="form-group">
     <label for="nombre">Nombre:</label>
     <input 
@@ -18,10 +17,21 @@
       [(ngModel)]="raza" 
       (ngModelChange)="onRazaChange()">
       <option value="">Selecciona una raza</option>
-      @for (razaOption of razasDisponibles; track razaOption) {
-        <option [value]="razaOption">
-          {{ razaOption }}
-        </option>
+      @for (razaOption of razasDisponibles(); track razaOption) {
+        <option [value]="razaOption">{{ razaOption }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="genero">Género:</label>
+    <select 
+      id="genero" 
+      [(ngModel)]="genero" 
+      (ngModelChange)="onGeneroChange()">
+      <option value="">Selecciona un género</option>
+      @for (generoOption of generosDisponibles(); track generoOption) {
+        <option [value]="generoOption">{{ generoOption }}</option>
       }
     </select>
   </div>
