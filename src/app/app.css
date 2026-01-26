@@ -95,9 +95,9 @@
 
 .app__main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: var(--spacing-xl);
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-xl) var(--spacing-xl);
   min-height: calc(100vh - 200px);
